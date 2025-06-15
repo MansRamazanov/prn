@@ -1,0 +1,28 @@
+:root {
+  --color-pink: rgba(216, 27, 96, 1);
+  --color-gray: rgba(130, 130, 130, 1);
+  --color-dark-gray: rgba(33, 33, 33, 1);
+  --color-black: rgba(11, 11, 11, 1);
+  --color-white: rgba(255, 255, 255, 1);
+  --color-light-gray: rgba(245, 245, 245, 1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-dark-gray);
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+@media (max-width: 540px) {
+  body {
+    background-color: var(--color-white);
+  }
+}
