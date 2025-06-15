@@ -5,7 +5,7 @@
       <div class="header-price">$999 — One Charge. No Rebill!</div>
     </div>
     <div class="form-content">
-      <form class="form-inputs">
+      <form class="form-inputs" @submit="handleSubmit">
         <div class="form-group">
           <BaseInput
             v-model="fullName"
@@ -29,7 +29,7 @@
       <BaseCheckbox v-model="isAgree" label="I agree to the terms and conditions" />
     </div>
     <div class="form-button">
-      <BaseButton label="Pay $999" :icon="LockIcon" :disabled="!isAgree" />
+      <BaseButton label="Pay $999" :icon="LockIcon" :disabled="!isAgree" @click="handleSubmit" />
       <div class="price-info">Price is in USD (United States Dollar).</div>
     </div>
   </div>
@@ -56,6 +56,12 @@ const emailRules = [
   (v: string | undefined) => !!v || 'Email is required',
   (v: string | undefined) => /.+@.+\..+/.test(v || '') || 'Enter a valid email address',
 ]
+
+const handleSubmit = () => {
+  if (fullName.value && email.value && isAgree.value) {
+    console.log('окак')
+  }
+}
 </script>
 
 <style scoped>
