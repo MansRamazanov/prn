@@ -29,14 +29,19 @@
       <BaseCheckbox v-model="isAgree" label="I agree to the terms and conditions" />
     </div>
     <div class="form-button">
-      <BaseButton label="Pay $999" :icon="LockIcon" :disabled="!isAgree" @click="handleSubmit" />
+      <BaseButton
+        label="Pay $999"
+        :icon="LockIcon"
+        :disabled="!isFormValid"
+        @click="handleSubmit"
+      />
       <div class="price-info">Price is in USD (United States Dollar).</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import BaseInput from './UI/BaseInput.vue'
 import BaseCheckbox from './UI/AgreeCheckbox.vue'
 import BaseButton from './UI/BaseButton.vue'
@@ -46,19 +51,31 @@ const fullName = ref('')
 const email = ref('')
 const isAgree = ref(false)
 
+const fullNameValid = ref(false)
+const emailValid = ref(false)
+
+const isFormValid = computed(() => {
+  return fullNameValid.value && emailValid.value && isAgree.value
+})
+
 const fullNameRules = [
-  (v: string | undefined) => !!v || 'Full name is required',
-  (v: string | undefined) => (v && v.trim().split(' ').length >= 2) || 'Enter at least two words',
-  (v: string | undefined) => (v && v.length <= 60) || 'Full name must be less than 60 characters',
+  (v: string | undefined) => {
+    const isValid = !!v && v.trim().split(' ').length >= 2 && v.length <= 60
+    fullNameValid.value = isValid
+    return isValid || 'Full name is required'
+  },
 ]
 
 const emailRules = [
-  (v: string | undefined) => !!v || 'Email is required',
-  (v: string | undefined) => /.+@.+\..+/.test(v || '') || 'Enter a valid email address',
+  (v: string | undefined) => {
+    const isValid = !!v && /.+@.+\..+/.test(v)
+    emailValid.value = isValid
+    return isValid || 'Email is required'
+  },
 ]
 
 const handleSubmit = () => {
-  if (fullName.value && email.value && isAgree.value) {
+  if (isFormValid.value) {
     console.log('окак')
   }
 }
